@@ -19,6 +19,25 @@ window.addEventListener('click', function(event){
 
   event.preventDefault();
 
+  var match = url.match(/(?:&|\?)page=(\d+)/), newPageNum;
+  if(match){
+    newPageNum = +match[1];
+  }else{
+    newPageNum = 1;
+  }
+
+  var separatorIdPrefix = 'togetter-more_pagenation_page_separator_';
+
+  var separatorId = separatorIdPrefix + newPageNum;
+  var sep = document.getElementById(separatorId);
+  if(newPageNum == 1){
+    location.hash = '#tweet_list_head';
+    return;
+  }else if(sep){
+    location.hash = separatorId;
+    return;
+  }
+
   var xhr = new XMLHttpRequest();
   xhr.open('GET', url);
   xhr.responseType = 'document';
@@ -27,17 +46,13 @@ window.addEventListener('click', function(event){
 
     var hr = document.createElement('hr');
     hr.setAttribute('class', 'togetter-more_pagenation_page_separator');
+    hr.setAttribute('id', separatorId);
     var p = document.createElement('togetter-more_pagenation_page_info');
     p.textContent = 'page: ';
     var a = document.createElement('a');
     a.setAttribute('class', 'togetter-more_pagenation_page_info');
     a.setAttribute('href', url);
-    var match;
-    if(match = url.match(/(&|\?)page=(\d+)/)){
-      a.textContent = match[1];
-    }else{
-      a.textContent = '1';
-    }
+    a.textContent = newPageNum;
     p.appendChild(a);
 
     var newTweetBoxChildren = Array.prototype.slice.call(
