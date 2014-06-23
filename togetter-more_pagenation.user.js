@@ -62,7 +62,7 @@ window.addEventListener('click', function(event){
     location.href = 'javascript:void $.lazy()';
   });
   xhr.send(null);
-}, true);
+});
 
 function appendPage(newNodes, insertPoint){
   var parent = insertPoint.parentNode;
