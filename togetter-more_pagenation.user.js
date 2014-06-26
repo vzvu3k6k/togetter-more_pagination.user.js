@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           Togetter: 継ぎ足しpagenation
+// @name           Togetter: 継ぎ足しpagination
 // @description    ページャーをクリックしたらその下に内容を継ぎ足す
 // @version        1.0
 // @author         vzvu3k6k
@@ -11,8 +11,8 @@
 window.addEventListener('click', function(event){
   if(event.button != 0) return;
 
-  var pagenationLinks = document.querySelectorAll('.tweet_box .pagenation a');
-  if(Array.prototype.indexOf.call(pagenationLinks, event.target) == -1) return;
+  var paginationLinks = document.querySelectorAll('.tweet_box .pagenation a');
+  if(Array.prototype.indexOf.call(paginationLinks, event.target) == -1) return;
 
   var url = event.target.href;
   if(url.indexOf('http://togetter.com/li/') != 0) return; // prevent XSS by cross-origin XHR
@@ -26,7 +26,7 @@ window.addEventListener('click', function(event){
     newPageNum = 1;
   }
 
-  var separatorIdPrefix = 'togetter-more_pagenation_page_separator_';
+  var separatorIdPrefix = 'togetter-more_pagination_page_separator_';
 
   var separatorId = separatorIdPrefix + newPageNum;
   var sep = document.getElementById(separatorId);
@@ -45,12 +45,12 @@ window.addEventListener('click', function(event){
     var insertPoint = event.target.parentNode.nextElementSibling.nextElementSibling;
 
     var hr = document.createElement('hr');
-    hr.setAttribute('class', 'togetter-more_pagenation_page_separator');
+    hr.setAttribute('class', 'togetter-more_pagination_page_separator');
     hr.setAttribute('id', separatorId);
-    var p = document.createElement('togetter-more_pagenation_page_info');
+    var p = document.createElement('togetter-more_pagination_page_info');
     p.textContent = 'page: ';
     var a = document.createElement('a');
-    a.setAttribute('class', 'togetter-more_pagenation_page_info');
+    a.setAttribute('class', 'togetter-more_pagination_page_info');
     a.setAttribute('href', url);
     a.textContent = newPageNum;
     p.appendChild(a);
